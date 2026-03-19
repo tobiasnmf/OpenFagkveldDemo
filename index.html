@@ -399,6 +399,41 @@
         line-height: 0.9;
       }
 
+      .countdown-note {
+        margin-top: 0.75rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .countdown-units {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .countdown-unit {
+        padding: 0.85rem 0.7rem;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        text-align: center;
+      }
+
+      .countdown-unit strong {
+        display: block;
+        font-size: clamp(1.4rem, 4vw, 2rem);
+        line-height: 1;
+        margin-bottom: 0.3rem;
+      }
+
+      .countdown-unit span {
+        color: var(--muted);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
       .label {
         color: var(--muted);
         text-transform: uppercase;
@@ -526,6 +561,10 @@
         .quote-grid,
         .feature-grid { grid-template-columns: 1fr; }
       }
+
+      @media (max-width: 520px) {
+        .countdown-units { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
     </style>
   </head>
   <body>
@@ -581,7 +620,31 @@
               <div class="screen-bars"><span></span><span></span><span></span></div>
               <div class="screen-title">openfagkveld://launch-sequence</div>
               <div class="label">Neste nedtelling</div>
-              <div class="big-counter">09.04</div>
+              <div class="big-counter" id="countdown-date">09.04</div>
+              <p class="countdown-note" id="countdown-status" aria-live="polite">
+                Teller ned til 9. april 2026 kl. 18:00.
+              </p>
+              <div class="countdown-units" aria-label="Nedtelling til arrangementet">
+                <div class="countdown-unit">
+                  <strong id="countdown-days">--</strong>
+                  <span>dager</span>
+                </div>
+                <div class="countdown-unit">
+                  <strong id="countdown-hours">--</strong>
+                  <span>timer</span>
+                </div>
+                <div class="countdown-unit">
+                  <strong id="countdown-minutes">--</strong>
+                  <span>min</span>
+                </div>
+                <div class="countdown-unit">
+                  <strong id="countdown-seconds">--</strong>
+                  <span>sek</span>
+                </div>
+              </div>
+              <noscript>
+                <p class="subtle">Slå på JavaScript for live nedtelling.</p>
+              </noscript>
               <p class="subtle">
                 En kveld for demoer, idéer, tech-snakk og akkurat passe mye show-off.
               </p>
@@ -731,5 +794,54 @@
         </p>
       </footer>
     </main>
+
+    <script>
+      (() => {
+        const eventDate = new Date("2026-04-09T18:00:00+02:00");
+        const dayEl = document.getElementById("countdown-days");
+        const hourEl = document.getElementById("countdown-hours");
+        const minuteEl = document.getElementById("countdown-minutes");
+        const secondEl = document.getElementById("countdown-seconds");
+        const statusEl = document.getElementById("countdown-status");
+        const dateEl = document.getElementById("countdown-date");
+
+        if (!dayEl || !hourEl || !minuteEl || !secondEl || !statusEl || !dateEl) {
+          return;
+        }
+
+        const pad = (value) => String(value).padStart(2, "0");
+
+        const updateCountdown = () => {
+          const now = new Date();
+          const diff = eventDate.getTime() - now.getTime();
+
+          if (diff <= 0) {
+            dateEl.textContent = "LIVE";
+            dayEl.textContent = "00";
+            hourEl.textContent = "00";
+            minuteEl.textContent = "00";
+            secondEl.textContent = "00";
+            statusEl.textContent = "Open Fagkveld er i gang 🚀";
+            return;
+          }
+
+          const totalSeconds = Math.floor(diff / 1000);
+          const days = Math.floor(totalSeconds / 86400);
+          const hours = Math.floor((totalSeconds % 86400) / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
+
+          dateEl.textContent = `${pad(days)}d ${pad(hours)}t`;
+          dayEl.textContent = pad(days);
+          hourEl.textContent = pad(hours);
+          minuteEl.textContent = pad(minutes);
+          secondEl.textContent = pad(seconds);
+          statusEl.textContent = `Teller ned til 9. april 2026 kl. 18:00 — ${days} dager igjen.`;
+        };
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
   </body>
 </html>
