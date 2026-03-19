@@ -123,6 +123,25 @@
         margin: 0 auto;
       }
 
+      .skip-link {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.9rem 1.1rem;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #030311;
+        font-weight: 800;
+        text-decoration: none;
+        transform: translateY(-180%);
+        transition: transform 180ms ease;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
       header {
         position: sticky;
         top: 0;
@@ -203,6 +222,13 @@
       .nav-links a:hover {
         transform: translateY(-2px) scale(1.01);
         filter: brightness(1.08);
+      }
+
+      .button:focus-visible,
+      .nav-links a:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 4px;
+        box-shadow: 0 0 0 6px rgba(255, 209, 102, 0.2);
       }
 
       main { padding: 3rem 0 6rem; }
@@ -466,6 +492,23 @@
         color: var(--muted);
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .button:hover,
+        .nav-links a:hover {
+          transform: none;
+        }
+      }
+
       @media (max-width: 960px) {
         header { position: static; }
         .hero,
@@ -477,6 +520,7 @@
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Hopp til innhold</a>
     <div class="aurora"></div>
     <div class="stars"></div>
     <div class="grid"></div>
@@ -498,7 +542,7 @@
       </div>
     </header>
 
-    <main class="wrap">
+    <main id="main-content" class="wrap">
       <section class="hero">
         <div>
           <div class="eyebrow">🚀 9. april · GitHub Pages · neon overload activated</div>
