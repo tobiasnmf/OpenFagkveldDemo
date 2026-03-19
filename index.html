@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open Fagkveld — 9. april</title>
+    <meta
+      name="description"
+      content="Flashy landing page for Open Fagkveld 9. april."
+    />
+    <style>
+      :root {
+        --bg: #050816;
+        --bg2: #0d1330;
+        --card: rgba(255, 255, 255, 0.08);
+        --text: #eef2ff;
+        --muted: #b6c2ff;
+        --accent: #7c3aed;
+        --accent2: #06b6d4;
+        --accent3: #f59e0b;
+        --border: rgba(255, 255, 255, 0.14);
+        --shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.35), transparent 28%),
+          radial-gradient(circle at 85% 25%, rgba(6, 182, 212, 0.28), transparent 24%),
+          radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.18), transparent 22%),
+          linear-gradient(135deg, var(--bg), var(--bg2));
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .noise,
+      .grid,
+      .glow {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .grid {
+        background-image:
+          linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(circle at center, black, transparent 78%);
+      }
+
+      .glow::before,
+      .glow::after {
+        content: "";
+        position: absolute;
+        width: 32rem;
+        height: 32rem;
+        filter: blur(90px);
+        opacity: 0.28;
+        border-radius: 999px;
+        animation: drift 12s ease-in-out infinite alternate;
+      }
+
+      .glow::before {
+        top: -6rem;
+        left: -8rem;
+        background: var(--accent);
+      }
+
+      .glow::after {
+        right: -10rem;
+        bottom: -8rem;
+        background: var(--accent2);
+        animation-delay: -4s;
+      }
+
+      @keyframes drift {
+        from { transform: translate3d(0, 0, 0) scale(1); }
+        to { transform: translate3d(2rem, 1rem, 0) scale(1.1); }
+      }
+
+      .wrap {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 1.1rem 0;
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(14px);
+        background: rgba(5, 8, 22, 0.45);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        z-index: 20;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .logo {
+        width: 2.4rem;
+        height: 2.4rem;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 12px 34px rgba(124, 58, 237, 0.45);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a,
+      .button,
+      .ghost {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .button,
+      .ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.95rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .button {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 14px 35px rgba(124, 58, 237, 0.35);
+      }
+
+      .ghost {
+        background: rgba(255,255,255,0.05);
+      }
+
+      .button:hover,
+      .ghost:hover {
+        transform: translateY(-2px);
+      }
+
+      main {
+        padding: 4rem 0 6rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 4.5rem 0 3rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        gap: 0.6rem;
+        align-items: center;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.06);
+        padding: 0.55rem 0.9rem;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+        margin: 1.2rem 0;
+      }
+
+      .gradient {
+        background: linear-gradient(135deg, #fff, #c4b5fd 35%, #67e8f9 80%, #fde68a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: 62ch;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .hero-card,
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        border-radius: 28px;
+        backdrop-filter: blur(18px);
+      }
+
+      .hero-card {
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: auto -20% 70% auto;
+        width: 14rem;
+        height: 14rem;
+        background: radial-gradient(circle, rgba(124,58,237,0.35), transparent 70%);
+      }
+
+      .stat-grid,
+      .details {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 1rem;
+      }
+
+      .stat,
+      .detail,
+      .agenda-item,
+      .quote {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 22px;
+      }
+
+      .stat {
+        padding: 1rem;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.7rem;
+        margin-bottom: 0.35rem;
+      }
+
+      section {
+        margin-top: 2rem;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1;
+        margin: 0;
+        letter-spacing: -0.04em;
+      }
+
+      .subtle {
+        color: var(--muted);
+      }
+
+      .details {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .detail,
+      .agenda-item,
+      .quote {
+        padding: 1.25rem;
+      }
+
+      .detail small,
+      .agenda-item small {
+        display: block;
+        color: var(--muted);
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .agenda {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .agenda-item {
+        min-height: 180px;
+      }
+
+      .highlight {
+        color: #fde68a;
+        font-weight: 700;
+      }
+
+      .quote-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .quote p {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+
+      .quote footer {
+        margin-top: 1rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      footer.page-footer {
+        margin-top: 3rem;
+        padding: 1.5rem 0 0;
+        color: var(--muted);
+        border-top: 1px solid rgba(255,255,255,0.08);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .details,
+        .agenda,
+        .quote-grid {
+          grid-template-columns: 1fr;
+        }
+
+        header { position: static; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <div class="glow"></div>
+
+    <header>
+      <div class="wrap">
+        <nav>
+          <div class="brand">
+            <div class="logo">⚡</div>
+            <span>Open Fagkveld</span>
+          </div>
+          <div class="nav-links">
+            <a href="#program">Program</a>
+            <a href="#details">Detaljer</a>
+            <a href="#hype">Hype</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">🚀 9. april · GitHub Pages · demo mode: ON</div>
+          <h1>
+            En <span class="gradient">fagkveld</span><br />
+            folk faktisk gleder seg til.
+          </h1>
+          <p class="lead">
+            OpenFagkveldDemo er landingssiden for en kveld med tech, demoer,
+            energi og gode nerdesamtaler. Flashy nok til å se dyr ut, enkel nok
+            til å hostes rett på GitHub Pages.
+          </p>
+          <div class="cta-row">
+            <a class="button" href="#details">Se arrangementet</a>
+            <a class="ghost" href="#program">Program</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h3>Event snapshot</h3>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong>9. april</strong>
+              <span>Datoen er låst</span>
+            </div>
+            <div class="stat">
+              <strong>Live</strong>
+              <span>Demo, prat og wow-faktor</span>
+            </div>
+            <div class="stat">
+              <strong>GitHub</strong>
+              <span>Hostet via Pages</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Fagkveld-energi</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="details">
+        <div class="section-head">
+          <div>
+            <h2>Praktisk info</h2>
+            <p class="subtle">Fyll inn detaljer senere om dere vil — designet er klart nå.</p>
+          </div>
+        </div>
+        <div class="details">
+          <article class="detail">
+            <small>Når</small>
+            <strong>9. april</strong>
+            <p>Kvelden for demoer, faglig påfyll og litt skamløs tech-hype.</p>
+          </article>
+          <article class="detail">
+            <small>Hva</small>
+            <strong>Open Fagkveld</strong>
+            <p>En landing page som skriker «dette blir bra» uten å miste fotfestet.</p>
+          </article>
+          <article class="detail">
+            <small>Hvor</small>
+            <strong>GitHub Pages</strong>
+            <p>Statisk, rask, gratis og veldig grei å deploye.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="program">
+        <div class="section-head">
+          <div>
+            <h2>Forslag til program</h2>
+            <p class="subtle">En stram liten flyt som ser proff ut og holder tempoet oppe.</p>
+          </div>
+        </div>
+        <div class="agenda">
+          <article class="agenda-item">
+            <small>01</small>
+            <h3>Velkommen</h3>
+            <p>Kort intro, hva kvelden handler om, og hvorfor folk burde lene seg frem i stolen.</p>
+          </article>
+          <article class="agenda-item">
+            <small>02</small>
+            <h3>Demo & idéer</h3>
+            <p>Vis noe ekte. Ikke bare slides. <span class="highlight">La ting blinke litt.</span></p>
+          </article>
+          <article class="agenda-item">
+            <small>03</small>
+            <h3>Prat & mingling</h3>
+            <p>Spørsmål, diskusjon og etterprat for de som liker å nerde videre.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="hype">
+        <div class="section-head">
+          <div>
+            <h2>Ekstra shoutout</h2>
+            <p class="subtle">På brukerens bestilling: litt følelser, men på en måte som ikke blir creepy.</p>
+          </div>
+        </div>
+        <div class="quote-grid">
+          <article class="quote">
+            <p>
+              Denne siden er bygget med høy puls, neon-glød og en helt
+              urimelig mengde entusiasme for at <span class="highlight">Morten</span>
+              dukker opp med god energi.
+            </p>
+            <footer>— OpenFagkveldDemo</footer>
+          </article>
+          <article class="quote">
+            <p>
+              Og ja — <span class="highlight">Jørgen</span> får også sin plass i lyset:
+              dette er ren digital respekt, pakket inn i gradienter og GitHub Pages.
+            </p>
+            <footer>— Med vennlig hype</footer>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <p>
+          Klar for justeringer: tidspunkt, sted, agenda, påmeldingslenke og branding kan legges inn på to minutter.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
