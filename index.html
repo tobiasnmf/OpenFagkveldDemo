@@ -313,7 +313,8 @@
       }
 
       .cta-row,
-      .pill-row {
+      .pill-row,
+      .calendar-actions {
         display: flex;
         gap: 0.9rem;
         flex-wrap: wrap;
@@ -321,6 +322,7 @@
 
       .cta-row { margin-top: 2rem; }
       .pill-row { margin-top: 1.3rem; }
+      .calendar-actions { margin-top: 1.5rem; }
 
       .pill {
         padding: 0.7rem 0.95rem;
@@ -769,25 +771,36 @@
         <div class="section-head">
           <div>
             <h2>Legg det rett i kalenderen</h2>
-            <p class="subtle">Én knapp, én .ics-fil, null unnskyldning for å glemme 9. april.</p>
+            <p class="subtle">Nå med både .ics-fil og direkte Google Calendar-lenke, så det faktisk er friksjonsfritt å melde seg på.</p>
           </div>
         </div>
         <div class="details">
           <article class="detail">
             <small>Filformat</small>
             <strong>.ics</strong>
-            <p>Funker med Apple Calendar, Google Calendar, Outlook og det meste som later som de er voksne.</p>
+            <p>Funker med Apple Calendar, Outlook og alt annet som skjønner standard kalenderfiler.</p>
           </article>
           <article class="detail">
-            <small>Tid</small>
-            <strong>9. april 2026 kl. 18:00</strong>
-            <p>Arrangementet legges inn med start- og sluttid, så folk slipper manuell tasting.</p>
+            <small>Direktevalg</small>
+            <strong>Google Calendar</strong>
+            <p>For folk som lever i nettleseren: ett klikk åpner ferdig utfylt kalenderhendelse med dato, tid og beskrivelse.</p>
           </article>
           <article class="detail">
             <small>Praktisk</small>
             <strong>Klar for detaljer</strong>
             <p>Lokasjon står foreløpig som TBA, så det er lett å oppdatere senere uten å rive opp resten av siden.</p>
           </article>
+        </div>
+        <div class="calendar-actions">
+          <a class="button primary" href="open-fagkveld-2026.ics" download="open-fagkveld-2026.ics">Last ned .ics</a>
+          <a
+            class="button secondary"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Open%20Fagkveld&amp;dates=20260409T160000Z%2F20260409T180000Z&amp;details=Fagkveld%20med%20demoer%2C%20tech-snakk%20og%20passe%20mye%20neon.%20Lokasjon%20kommer.&amp;location=TBA"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Åpne i Google Calendar
+          </a>
         </div>
       </section>
 
