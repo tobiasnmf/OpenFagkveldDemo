@@ -169,6 +169,18 @@
         z-index: 100;
       }
 
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
       .skip-link:focus {
         transform: translateY(0);
       }
@@ -649,11 +661,14 @@
               <div class="screen-bars"><span></span><span></span><span></span></div>
               <div class="screen-title">openfagkveld://launch-sequence</div>
               <div class="label">Neste nedtelling</div>
-              <div class="big-counter" id="countdown-date">09.04</div>
-              <p class="countdown-note" id="countdown-status" aria-live="polite">
+              <div class="big-counter" id="countdown-date" aria-hidden="true">09.04</div>
+              <p class="countdown-note" id="countdown-status">
                 Teller ned til 9. april 2026 kl. 18:00.
               </p>
-              <div class="countdown-units" aria-label="Nedtelling til arrangementet">
+              <p class="sr-only" id="countdown-live" aria-live="polite">
+                Teller ned til 9. april 2026 kl. 18:00.
+              </p>
+              <div class="countdown-units" aria-label="Nedtelling til arrangementet" aria-hidden="true">
                 <div class="countdown-unit">
                   <strong id="countdown-days">--</strong>
                   <span>dager</span>
@@ -869,13 +884,22 @@
         const minuteEl = document.getElementById("countdown-minutes");
         const secondEl = document.getElementById("countdown-seconds");
         const statusEl = document.getElementById("countdown-status");
+        const liveEl = document.getElementById("countdown-live");
         const dateEl = document.getElementById("countdown-date");
 
-        if (!dayEl || !hourEl || !minuteEl || !secondEl || !statusEl || !dateEl) {
+        if (!dayEl || !hourEl || !minuteEl || !secondEl || !statusEl || !liveEl || !dateEl) {
           return;
         }
 
         const pad = (value) => String(value).padStart(2, "0");
+        let lastAnnouncement = "";
+
+        const announce = (message) => {
+          if (message !== lastAnnouncement) {
+            liveEl.textContent = message;
+            lastAnnouncement = message;
+          }
+        };
 
         const updateCountdown = () => {
           const now = new Date();
@@ -888,6 +912,7 @@
             minuteEl.textContent = "00";
             secondEl.textContent = "00";
             statusEl.textContent = "Open Fagkveld er i gang 🚀";
+            announce("Open Fagkveld er i gang.");
             return;
           }
 
@@ -903,6 +928,11 @@
           minuteEl.textContent = pad(minutes);
           secondEl.textContent = pad(seconds);
           statusEl.textContent = `Teller ned til 9. april 2026 kl. 18:00 — ${days} dager igjen.`;
+
+          const liveMessage = minutes === 0 && seconds === 0
+            ? `Det er ${days} dager og ${hours} timer igjen til Open Fagkveld.`
+            : `Det er ${days} dager igjen til Open Fagkveld.`;
+          announce(liveMessage);
         };
 
         updateCountdown();
