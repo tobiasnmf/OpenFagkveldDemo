@@ -485,7 +485,8 @@
       .details,
       .agenda,
       .quote-grid,
-      .feature-grid {
+      .feature-grid,
+      .faq-list {
         display: grid;
         gap: 1rem;
       }
@@ -494,17 +495,33 @@
       .details,
       .feature-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
       .agenda { grid-template-columns: repeat(3, minmax(0,1fr)); }
-      .quote-grid { grid-template-columns: 1fr 1fr; }
+      .quote-grid,
+      .faq-list { grid-template-columns: 1fr 1fr; }
 
       .stat,
       .detail,
       .agenda-item,
       .quote,
-      .feature {
+      .feature,
+      .faq-item {
         padding: 1.2rem;
         border-radius: 24px;
         background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.10);
+      }
+
+      .detail strong,
+      .faq-item h3 {
+        display: block;
+        margin-bottom: 0.45rem;
+      }
+
+      .detail time {
+        font: inherit;
+      }
+
+      .faq-item p {
+        margin: 0;
       }
 
       .stat strong {
@@ -599,7 +616,8 @@
         .details,
         .agenda,
         .quote-grid,
-        .feature-grid { grid-template-columns: 1fr; }
+        .feature-grid,
+        .faq-list { grid-template-columns: 1fr; }
       }
 
       @media (max-width: 520px) {
@@ -623,7 +641,9 @@
           </div>
           <div class="nav-links">
             <a href="#details">Detaljer</a>
+            <a href="#kalender">Kalender</a>
             <a href="#program">Program</a>
+            <a href="#faq">FAQ</a>
             <a href="#hype">Hype</a>
           </div>
         </nav>
@@ -740,18 +760,18 @@
         <div class="details">
           <article class="detail">
             <small>Når</small>
-            <strong>9. april</strong>
-            <p>Datoen er tydelig frontet, så ingen slipper unna kalenderinvitasjonen.</p>
+            <strong><time datetime="2026-04-09T18:00:00+02:00">Torsdag 9. april 2026 kl. 18:00–20:00</time></strong>
+            <p>Dato og klokkeslett er nå skrevet rett ut, så det er null tvil om når folk skal møte opp.</p>
+          </article>
+          <article class="detail">
+            <small>Hvor</small>
+            <strong>Lokasjon kommer</strong>
+            <p>Venue er fortsatt TBA, men strukturen er klar så sted kan fylles inn senere uten ekstra styr.</p>
           </article>
           <article class="detail">
             <small>Hva</small>
             <strong>Fagkveld med trøkk</strong>
             <p>Perfekt miks av demo, teknologi, samtaler og litt digital showmanship.</p>
-          </article>
-          <article class="detail">
-            <small>Hvordan</small>
-            <strong>GitHub Pages</strong>
-            <p>Enkel deploy, null backend-styr og en side som fortsatt ser dyr ut.</p>
           </article>
         </div>
       </section>
@@ -841,6 +861,33 @@
             <small>03</small>
             <h3>Nerdeprat</h3>
             <p>Spørsmål, refleksjoner og små sidespor som ofte er der de beste idéene dukker opp.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="section-head">
+          <div>
+            <h2>Vanlige spørsmål</h2>
+            <p class="subtle">Liten FAQ for de praktiske tingene folk faktisk lurer på før de dukker opp.</p>
+          </div>
+        </div>
+        <div class="faq-list">
+          <article class="faq-item">
+            <h3>Må jeg melde meg på?</h3>
+            <p>Ikke enda. Siden er klar for påmeldingslenke senere, men akkurat nå er kalenderknappene den enkleste måten å holde av tidspunktet på.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Kommer sted snart?</h3>
+            <p>Jepp — lokasjon står som TBA foreløpig, så arrangøren kan fylle inn detaljene når de er spikret uten å endre resten av oppsettet.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Hva slags kveld er dette?</h3>
+            <p>Lav terskel, høy nerdegrad: demoer, prat, idéer og akkurat nok neon til at det føles som et lite launch-party.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Kan jeg legge det i kalenderen nå?</h3>
+            <p>Ja. Siden har både nedlastbar <span class="highlight">.ics</span>-fil og direkte Google Calendar-lenke, så du slipper manuell punching.</p>
           </article>
         </div>
       </section>
