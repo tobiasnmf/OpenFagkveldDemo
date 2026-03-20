@@ -520,6 +520,50 @@
         font: inherit;
       }
 
+      .faq-item {
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .faq-question {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.2rem;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .faq-question span {
+        flex: 1;
+      }
+
+      .faq-question::after {
+        content: "+";
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--gold);
+        transition: transform 180ms ease;
+      }
+
+      .faq-question[aria-expanded="true"]::after {
+        transform: rotate(45deg);
+      }
+
+      .faq-answer {
+        padding: 0 1.2rem 1.2rem;
+      }
+
+      .faq-answer[hidden] {
+        display: none;
+      }
+
       .faq-item p {
         margin: 0;
       }
@@ -874,20 +918,36 @@
         </div>
         <div class="faq-list">
           <article class="faq-item">
-            <h3>Må jeg melde meg på?</h3>
-            <p>Ikke enda. Siden er klar for påmeldingslenke senere, men akkurat nå er kalenderknappene den enkleste måten å holde av tidspunktet på.</p>
+            <button class="faq-question" type="button" aria-expanded="true" aria-controls="faq-answer-1" id="faq-question-1">
+              <span>Må jeg melde meg på?</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1">
+              <p>Ikke enda. Siden er klar for påmeldingslenke senere, men akkurat nå er kalenderknappene den enkleste måten å holde av tidspunktet på.</p>
+            </div>
           </article>
           <article class="faq-item">
-            <h3>Kommer sted snart?</h3>
-            <p>Jepp — lokasjon står som TBA foreløpig, så arrangøren kan fylle inn detaljene når de er spikret uten å endre resten av oppsettet.</p>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-2" id="faq-question-2">
+              <span>Kommer sted snart?</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" hidden>
+              <p>Jepp — lokasjon står som TBA foreløpig, så arrangøren kan fylle inn detaljene når de er spikret uten å endre resten av oppsettet.</p>
+            </div>
           </article>
           <article class="faq-item">
-            <h3>Hva slags kveld er dette?</h3>
-            <p>Lav terskel, høy nerdegrad: demoer, prat, idéer og akkurat nok neon til at det føles som et lite launch-party.</p>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-3" id="faq-question-3">
+              <span>Hva slags kveld er dette?</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" hidden>
+              <p>Lav terskel, høy nerdegrad: demoer, prat, idéer og akkurat nok neon til at det føles som et lite launch-party.</p>
+            </div>
           </article>
           <article class="faq-item">
-            <h3>Kan jeg legge det i kalenderen nå?</h3>
-            <p>Ja. Siden har både nedlastbar <span class="highlight">.ics</span>-fil og direkte Google Calendar-lenke, så du slipper manuell punching.</p>
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-4" id="faq-question-4">
+              <span>Kan jeg legge det i kalenderen nå?</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" hidden>
+              <p>Ja. Siden har både nedlastbar <span class="highlight">.ics</span>-fil og direkte Google Calendar-lenke, så du slipper manuell punching.</p>
+            </div>
           </article>
         </div>
       </section>
@@ -981,6 +1041,23 @@
             : `Det er ${days} dager igjen til Open Fagkveld.`;
           announce(liveMessage);
         };
+
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach((question) => {
+          question.addEventListener("click", () => {
+            const answerId = question.getAttribute("aria-controls");
+            const answer = answerId ? document.getElementById(answerId) : null;
+            const isExpanded = question.getAttribute("aria-expanded") === "true";
+
+            if (!answer) {
+              return;
+            }
+
+            question.setAttribute("aria-expanded", String(!isExpanded));
+            answer.hidden = isExpanded;
+          });
+        });
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
