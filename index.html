@@ -632,7 +632,7 @@
           <div class="cta-row">
             <a class="button primary" href="#details">Jeg vil se mer</a>
             <a class="button secondary" href="#program">Programmet</a>
-            <a class="button ghost" href="#kalender" id="calendar-link" download="open-fagkveld-2026.ics">Legg i kalender</a>
+            <a class="button ghost" href="open-fagkveld-2026.ics" download="open-fagkveld-2026.ics">Legg i kalender</a>
           </div>
           <div class="pill-row">
             <span class="pill">✨ glassmorphism</span>
@@ -857,45 +857,12 @@
         const secondEl = document.getElementById("countdown-seconds");
         const statusEl = document.getElementById("countdown-status");
         const dateEl = document.getElementById("countdown-date");
-        const calendarLink = document.getElementById("calendar-link");
 
         if (!dayEl || !hourEl || !minuteEl || !secondEl || !statusEl || !dateEl) {
           return;
         }
 
         const pad = (value) => String(value).padStart(2, "0");
-        const formatIcsDate = (date) => {
-          const yyyy = date.getUTCFullYear();
-          const mm = pad(date.getUTCMonth() + 1);
-          const dd = pad(date.getUTCDate());
-          const hh = pad(date.getUTCHours());
-          const min = pad(date.getUTCMinutes());
-          const ss = pad(date.getUTCSeconds());
-          return `${yyyy}${mm}${dd}T${hh}${min}${ss}Z`;
-        };
-
-        if (calendarLink) {
-          const eventEndDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
-          const icsContent = [
-            "BEGIN:VCALENDAR",
-            "VERSION:2.0",
-            "PRODID:-//OpenFagkveldDemo//Open Fagkveld 2026//NO",
-            "CALSCALE:GREGORIAN",
-            "BEGIN:VEVENT",
-            `UID:open-fagkveld-2026@openfagkvelddemo`,
-            `DTSTAMP:${formatIcsDate(new Date())}`,
-            `DTSTART:${formatIcsDate(eventDate)}`,
-            `DTEND:${formatIcsDate(eventEndDate)}`,
-            "SUMMARY:Open Fagkveld",
-            "DESCRIPTION:Fagkveld med demoer, tech-snakk og passe mye neon. Lokasjon kommer.",
-            "LOCATION:TBA",
-            "END:VEVENT",
-            "END:VCALENDAR"
-          ].join("\r\n");
-
-          const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
-          calendarLink.href = URL.createObjectURL(blob);
-        }
 
         const updateCountdown = () => {
           const now = new Date();
